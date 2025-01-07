@@ -55,6 +55,25 @@ def select_city(input_id, city_name):
     except Exception as e:
         print(f"Hiba a '{city_name}' kiválasztásakor: {e}")
 
+# Dátum és idő beállítása az "Egész nap" opció kiválasztásával
+def set_all_day_option():
+    try:
+        # Kattintás a "travel_time" mezőre a legördülő menü megnyitásához
+        travel_time_div = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, "div.travel_time"))
+        )
+        travel_time_div.click()
+        print("Időpont mező sikeresen kattintva.")
+        
+        # Legördülő menüben az "Egész nap" opció kiválasztása a megfelelő label alapján
+        all_day_label = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, "div.dropdown.show label[for='inp_allday']"))
+        )
+        all_day_label.click()
+        print("Egész nap opció kiválasztva.")
+    except Exception as e:
+        print(f"Hiba az egész nap opció kiválasztásakor: {e}")
+
 def click_search_button():
     # Keresés gombra kattintás
     try:
