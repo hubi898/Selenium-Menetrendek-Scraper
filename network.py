@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Excel betöltése (eredeti adat és csomópontok színei, méretei)
-excel_data = pd.ExcelFile("data3.xlsx")
+excel_data = pd.ExcelFile("data4.xlsx")
 df = excel_data.parse(excel_data.sheet_names[0])
 
 # Csomópontok attribútumokat tartalmazó másik Excel fájl betöltése
@@ -22,7 +22,6 @@ graph.add_edges_from(zip(edges["Induló hely"], edges["Érkező hely"]))
 # Attribútumok hozzáadása: csak a populáció
 node_sizes = {}
 
-# Az attrib_df-nek tartalmaznia kell a csomópont nevét és populációját
 for idx, row in attrib_df.iterrows():
     node = row["Node"]  # Node oszlop neve
     population = row["Population"]  # Population oszlop neve
@@ -37,18 +36,16 @@ betweenness_centrality = nx.betweenness_centrality(graph)
 closeness_centrality = nx.closeness_centrality(graph)
 density = nx.density(graph)
 
-# Központiság kiírása
-print("Fokszámok (Degree Centrality):")
-print(pd.DataFrame([(node, dc) for node, dc in degree_centrality.items()], columns=['Node', 'Degree Centrality']))
-print("Bejövő Fokszámok (In-Degree Centrality):")
-print(pd.DataFrame([(node, dc) for node, dc in in_degree_centrality.items()], columns=['Node', 'In-Degree Centrality']))
-print("\nKimenő Fokszámok (Out-Degree Centrality):")
-print(pd.DataFrame([(node, dc) for node, dc in out_degree_centrality.items()], columns=['Node', 'Out-Degree Centrality']))
-print("\nKözpontiság (Betweenness Centrality):")
-print(pd.DataFrame([(node, bc) for node, bc in betweenness_centrality.items()], columns=['Node', 'Betweenness Centrality']))
-print(f"\nSűrűség: {density}")
-print("\nElérhetőség (Closeness Centrality):")
-print(pd.DataFrame([(node, cc) for node, cc in closeness_centrality.items()], columns=['Node', 'Closeness Centrality']))
+# Reciprocitás kiszámítása minden csomópontra
+reciprocity = {}
+for node in graph.nodes:
+    total_edges = graph.out_degree(node) + graph.in_degree(node)
+    reciprocal_edges = sum(1 for neighbor in graph.successors(node) if graph.has_edge(neighbor, node))
+    reciprocity[node] = reciprocal_edges / total_edges if total_edges > 0 else 0
+
+# Reciprocitás kiírása
+print("\nReciprocitás (csomópontokra lebontva):")
+print(pd.DataFrame([(node, r) for node, r in reciprocity.items()], columns=['Node', 'Reciprocity']))
 
 # Interconnectednesst számítása
 interconnectivity = nx.average_node_connectivity(graph)
@@ -65,8 +62,6 @@ if len(strongly_connected_components) > 1:
 else:
     print("\nA gráf összefüggő.")
 
-# Leghosszabb és legrövidebb út számítása
-
 # A leghosszabb út számítása (gráf átmérője)
 if nx.is_connected(graph.to_undirected()):
     diameter = nx.diameter(graph.to_undirected())
@@ -74,12 +69,14 @@ if nx.is_connected(graph.to_undirected()):
 else:
     print("\nA gráf nem összefüggő, így nem lehet meghatározni a leghosszabb utat.")
 
-# Spring layout használata
+#layout beállítása
 pos = nx.kamada_kawai_layout(graph)
 
 # Rajzolás csomópont-méretezéssel
-node_sizes_list = [node_sizes.get(node, 10) * 5 for node in graph.nodes()]  # Az alapértelmezett méret 100
-plt.figure(figsize=(12, 10), facecolor='#D3D3D3')
+node_sizes_list = [node_sizes.get(node, 10) * 3 for node in graph.nodes()]  # Az alapértelmezett méret 100
+plt.figure(figsize=(12, 10))
+ax = plt.gca()
+
 nx.draw(graph, pos, with_labels=True, node_size=node_sizes_list, font_size=10, font_color="black", edge_color="gray", width=1)
 plt.title("Átlátható gráf vizualizáció")
 plt.show()
