@@ -10,7 +10,7 @@ I used HotspotShield VPN to bypass the regulation, it worked just fine.
 After I got the information (data3.xlsx), I made the code for the network analysis. You can find it as network.py 
 For the attribute, I had to get the up to date data for the populations of each settlement, so I made a scraper for the following website: https://www.ksh.hu/apps/hntr.main?p_lang=HU . You can find this file as settlement_population_finder_hungary.py
 This is useful if you ever want to get the exact population of a city in Hungary.
-I used the excel output for the attribute (city_population), and implemented the metrics that I was curious about. For the first run, you can check the network_0_1.png file, for the second (which only has direct bus connections): network_0 .
+I used the excel output for the attribute (city_population), and implemented the metrics that I was curious about. For the first run, you can check the network_0_1.png file, for the second (which only has direct bus connections): network_0 . The data file for the metrics is metrics.xlsx . 
 I also made a pyvis version of the network for visualisation purposes.
 
 There might be some better ways to do this project, make sure to share your suggestions with me if you have the time.
