@@ -1,4 +1,4 @@
-Hi! This project is a part of an ongoing study regarding the Vasi-Hegyhát area in Hungary.
+Hi! This project is a part of an ongoing sociological study regarding the Vasi-Hegyhát area in Hungary.
 The main focus of the project is to create a graph of all the public transportation opportunities available in the region. 
 The codes are all written in python, with the help of chatGPT and without previous experties in coding. :) 
 
