@@ -4,7 +4,7 @@ The codes are all written in python, with the help of chatGPT and without previo
 
 The first objective was to scrape the travel data from www.Mentrendek.hu which is the official listing website in Hungary for bus and train routes. I managed to get the data with the travel_scrape.py file. (In the first run, I used it with 0 and 1 Transfers, in the second, I only checked 0 transfer routes)
 *The code is working, but it requires some extra steps to make it work correctly. After it starts the Chrome browser, you have to manually close the tutorial and the accept cookies pop up. And you have to do this quickly...
-After that, it works fine. It is kind of slow, but that's because I wanted to make sure the page won't block me as fast. In my experience, you can get to around 700-800 travel request/day, after that, it says you passed your daily limit.
+After that, it works fine. It is kind of slow, but that's because I wanted to make sure the page won't block me as fast. In my experience, you can get to around 700-800 travel request/day. After that, it says you passed your daily limit.
 I used HotspotShield VPN to bypass the regulation, it worked just fine.
 
 After I got the information (data3.xlsx), I made the code for the network analysis. You can find it as network.py 
